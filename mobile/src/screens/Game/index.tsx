@@ -10,18 +10,20 @@ import { iGameParams } from '../../@types/navigation'
 import { Background } from '../../components/Background'
 import { Heading } from '../../components/Heading'
 import { DuoCard, iDuoCardProps } from '../../components/DuoCard'
+import { DuoMatch } from '../../components/DuoMatch'
 
 import { styles } from './styles'
 import { THEME } from '../../theme'
 
 export function Game() {
    const [ duos, setDuos ] = useState<iDuoCardProps[]>([])
+   const [ discordDuoSelected, setDiscordDuoSelected ] = useState('')
    const route = useRoute()
    const navigation = useNavigation()
    const game = route.params as iGameParams
 
    useEffect(() => {
-      fetch(`http://192.168.0.153:3333/games/${game.id}/ads`)
+      fetch(`http://192.168.50.90:3333/games/${game.id}/ads`)
          .then(response => response.json())
          .then(data => setDuos(data))
    }, [])
@@ -30,6 +32,12 @@ export function Game() {
       navigation.goBack()
    }
  
+   async function getDiscordUser(adsId: string) {
+      fetch(`http://192.168.50.90:3333/ads/${adsId}/discord`)
+         .then(response => response.json())
+         .then(data => setDiscordDuoSelected(data.discord))
+   }
+
    return (
       <Background>
          <SafeAreaView style={styles.container}>
@@ -70,7 +78,7 @@ export function Game() {
                      weekDays={item.weekDays}
                      useVoiceChannel={item.useVoiceChannel}
                      yearsPlaying={item.yearsPlaying}    
-                     onConnect={()=>{}}     
+                     onConnect={()=> getDiscordUser(item.id)}     
                   />
                )}
                horizontal
@@ -83,7 +91,11 @@ export function Game() {
                )}
             />
 
-            
+            <DuoMatch
+               visible={discordDuoSelected.length > 0}
+               discord={discordDuoSelected}
+               onClose={() => setDiscordDuoSelected('')}
+            />
          </SafeAreaView>
       </Background>
    )

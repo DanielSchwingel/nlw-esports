@@ -16,7 +16,7 @@ export function Home() {
    const navigation = useNavigation()
 
    useEffect(() => {
-      fetch('http://192.168.0.153:3333/games')
+      fetch('http://192.168.50.90:3333/games')
          .then(response => response.json())
          .then(data => setGames(data))
    }, [])
