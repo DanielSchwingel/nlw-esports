@@ -4,5 +4,8 @@ node_modules/
 # Build path
 build/
 
+# Environment Variables
+./env
+
 # Database
 ./src/database/db.sqlite
