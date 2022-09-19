@@ -1,4 +1,4 @@
-# nlw-esports
+![header](./assets/header.png)
 Application developed at NLW eSports, organized by Rocketseat. 🚀
 
 ### 🗒️ Description
