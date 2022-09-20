@@ -5,7 +5,7 @@ node_modules/
 build/
 
 # Environment Variables
-./env
+.env
 
 # Database
-./src/database/db.sqlite
+src/database/*.sqlite
