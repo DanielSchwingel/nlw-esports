@@ -15,7 +15,7 @@ interface iGame {
 
 function CreateAdModal() {
    const [ games, setGames ] = useState<iGame[]>([])
-   const [ game, setGame ] = useState('')
+   const [ game, setGame ] = useState(undefined)
    const [ weekDays, setWeekDays ] = useState<string[]>([])
    const [ useVoiceChannel, setUseVoiceChannel ] = useState(false)
 
@@ -119,7 +119,7 @@ function CreateAdModal() {
                         <ToggleGroup.Item 
                            value='0'
                            title='Domingo'
-                           className={`w-8 h-8 rounded bg-zinc-900 ${weekDays.includes('0') ? 'bg-violet-500' : ''}`}
+                           className={`w-8 h-8 rounded ${weekDays.includes('0') ? 'bg-violet-500' : 'bg-zinc-900'}`}
                         >
                            D
                         </ToggleGroup.Item>
