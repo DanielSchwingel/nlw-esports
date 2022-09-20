@@ -24,7 +24,7 @@ To carry out this project, the following technologies were used:
 - [React Navigation](https://reactnavigation.org/): Navigation in the application.
 
 ### ✅ Challenges
-- [ ] Implement Select component with [Radix](https://www.radix-ui.com/).
+- [x] Implement Select component with [Radix](https://www.radix-ui.com/).
 - [ ] Implement slider in games list (web) with [KeenSlider](https://keen-slider.io/).
 - [ ] Improve web form with [React Hook Form](https://react-hook-form.com/).
 - [ ] Implement push notification when registering new game.

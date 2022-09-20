@@ -2,7 +2,8 @@ import { FormEvent, useEffect, useState } from 'react'
 import * as Dialog from '@radix-ui/react-dialog'
 import * as CheckBox from '@radix-ui/react-checkbox'
 import * as ToggleGroup from '@radix-ui/react-toggle-group'
-import { Check, GameController } from 'phosphor-react' 
+import * as Select from '@radix-ui/react-select';
+import { Check, GameController, CaretDown } from 'phosphor-react' 
 import axios from 'axios'
 
 import { Input } from './Form/Input'
@@ -14,6 +15,7 @@ interface iGame {
 
 function CreateAdModal() {
    const [ games, setGames ] = useState<iGame[]>([])
+   const [ game, setGame ] = useState('')
    const [ weekDays, setWeekDays ] = useState<string[]>([])
    const [ useVoiceChannel, setUseVoiceChannel ] = useState(false)
 
@@ -31,7 +33,7 @@ function CreateAdModal() {
       
       const data = Object.fromEntries(formData)
       try {
-         await axios.post(`http://localhost:3333/games/${data.game}/ads`,{
+         await axios.post(`http://localhost:3333/games/${game}/ads`,{
             name: data.name,
             yearsPlaying: data.yearsPlaying,
             discord: data.discord,
@@ -45,9 +47,6 @@ function CreateAdModal() {
          console.log(err)
          alert('Erro ao criar anúncio.')
       }
-      console.log(data)
-      console.log(weekDays)
-      console.log(useVoiceChannel)
    }
 
    return (
@@ -62,17 +61,34 @@ function CreateAdModal() {
                   <label htmlFor='game' className='font-semibold'>
                      Qual o game?
                   </label>
-                  <select 
-                     name='game' 
-                     id='game' 
-                     className='bg-zinc-900 py-3 px-4 rounded text-sm placeholder:text-zinc-500 appearance-none'
-                     defaultValue=''
+                  <Select.Root
+                     value={game}
+                     onValueChange={setGame}
                   >
-                     <option disabled value=''>Selecione o game que deseja jogar</option>
-                     {games.map(game => {
-                        return <option key={game.id} value={game.id}>{game.title}</option>
-                     })}
-                  </select>
+                     <Select.SelectTrigger className='bg-zinc-900 py-3 px-4 rounded text-sm placeholder:text-zinc-500 flex justify-between'>
+                        <Select.Value placeholder='Selecione o game que deseja jogar'/>
+                        <Select.Icon>
+                           <CaretDown className='w-6 h-6 zinc-500'/>
+                        </Select.Icon>
+                     </Select.SelectTrigger>
+                     <Select.Portal>
+                        <Select.Content>
+                           <Select.Viewport className='p-2 flex flex-col gap-1 bg-zinc-900'>
+                           {games.map(game => {
+                              return (
+                                 <Select.Item value={game.id} className='text-zinc-500 text-sm rounded p-1 flex items-center justify-start gap-2 h-8 hover:cursor-pointer hover:bg-violet-400 hover:text-white'>
+                                    <Select.ItemIndicator>
+                                       <Check className='w-4 h-4 text-emerald-400'/>
+                                    </Select.ItemIndicator>
+                                    <Select.ItemText>{game.title}</Select.ItemText>
+                                 </Select.Item>
+                              )
+                           })}
+                              
+                           </Select.Viewport>
+                        </Select.Content>
+                     </Select.Portal>
+                  </Select.Root>                    
                </div>
 
                <div className='flex flex-col gap-2'>
